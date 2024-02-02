@@ -58,6 +58,10 @@ public class User {
         return username;
     }
 
+    public List<Task> getTasks() {
+        return Tasks;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
