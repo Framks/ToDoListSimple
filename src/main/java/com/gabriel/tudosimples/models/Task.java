@@ -7,6 +7,18 @@ import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 
+/**
+ *  para o codigo não ficar tão grande podemos utilizar o loombok
+ *  ele é utilizado para gerar metodos como getters e setters e construtores
+ * @Getter cria os getters
+ * @Setter os setters
+ * @AllArgsConstructor cria o construtor com todos os argumentos
+ * @NoArgsConstructor cria o construtor sem nem um argumento
+ * @EqualsAndHashCode cria o equal e o hashcode
+ *  eu vou utilizar so meus proprios pois ainda estou aprendendo
+ * */
+
+
 @Entity
 @Table(name = Task.TABLE_NAME)
 public class Task {
