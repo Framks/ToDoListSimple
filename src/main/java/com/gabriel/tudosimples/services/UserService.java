@@ -3,6 +3,8 @@ package com.gabriel.tudosimples.services;
 import com.gabriel.tudosimples.models.User;
 import com.gabriel.tudosimples.repositories.TaskRepository;
 import com.gabriel.tudosimples.repositories.UserRepository;
+import com.gabriel.tudosimples.services.exceptions.DataBindingViolationException;
+import com.gabriel.tudosimples.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +21,7 @@ public class UserService {
 
     public User findById(Long id){
         Optional<User> user = this.userRepository.findById(id);
-        return user.orElseThrow(() -> new RuntimeException(
+        return user.orElseThrow(() -> new ObjectNotFoundException(
                 "Usuário não encontrado! Id: "+id+", Tip: "+ User.class.getName()
         ));
     }
@@ -44,7 +46,8 @@ public class UserService {
         try{
             this.userRepository.deleteById(id);
         }catch (Exception e){
-            throw new RuntimeException("Não é possível excluir pois há entidades realcionadas a esse usuário!");
+            throw new DataBindingViolationException("Não é possível excluir pois há entidades realcionadas a esse usuário!") {
+            };
         }
     }
 }

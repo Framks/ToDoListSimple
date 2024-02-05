@@ -3,6 +3,8 @@ package com.gabriel.tudosimples.services;
 import com.gabriel.tudosimples.models.Task;
 import com.gabriel.tudosimples.models.User;
 import com.gabriel.tudosimples.repositories.TaskRepository;
+import com.gabriel.tudosimples.services.exceptions.DataBindingViolationException;
+import com.gabriel.tudosimples.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +23,7 @@ public class TaskService {
 
     public Task findById(Long id){
         Optional<Task> task = this.taskRepository.findById(id);
-        return task.orElseThrow(() ->new RuntimeException("tarefa não encontrada Id:"+ id +", Tipo: "+Task.class.getName()));
+        return task.orElseThrow(() ->new ObjectNotFoundException("tarefa não encontrada Id:"+ id +", Tipo: "+Task.class.getName()));
     }
 
     @Transactional
@@ -45,7 +47,7 @@ public class TaskService {
         try{
             this.taskRepository.deleteById(id);
         }catch (Exception e){
-            throw (new RuntimeException("Não é possivel excluir pois há entidade realcionada a Task"));
+            throw (new DataBindingViolationException("Não é possivel excluir pois há entidade realcionada a Task"));
         }
     }
 
