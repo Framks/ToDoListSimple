@@ -23,15 +23,15 @@ public class User {
     private Long id;
 
     @Column(name = "username", length = 100, nullable = false, unique = true)
-    @jakarta.validation.constraints.NotNull(groups = CreateUser.class)
-    @NotEmpty(groups = CreateUser.class)
-    @Size(min =2,max = 100, groups = CreateUser.class)
+    @jakarta.validation.constraints.NotNull
+    @NotEmpty
+    @Size(min =2,max = 100)
     private String username;
 
     @Column(name = "password", length = 60, nullable = false)
-    @NotEmpty(groups = {CreateUser.class,UpdateUser.class})
-    @jakarta.validation.constraints.NotNull(groups = {CreateUser.class,UpdateUser.class})
-    @Size(min = 8, max = 60, groups = {CreateUser.class,UpdateUser.class})
+    @NotEmpty
+    @jakarta.validation.constraints.NotNull
+    @Size(min = 8, max = 60)
     private String password;
 
     @OneToMany(mappedBy = "user")
