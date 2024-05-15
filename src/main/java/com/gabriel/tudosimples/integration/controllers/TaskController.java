@@ -1,28 +1,22 @@
-package com.gabriel.tudosimples.controllers;
+package com.gabriel.tudosimples.integration.controllers;
 
 import com.gabriel.tudosimples.models.Task;
-import com.gabriel.tudosimples.services.TaskService;
-import com.gabriel.tudosimples.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.gabriel.tudosimples.usecases.impl.task.TaskCaseUseImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
-@Validated
+@RequiredArgsConstructor
 public class TaskController {
 
-    @Autowired
-    private TaskService taskService;
+    private TaskCaseUseImpl taskService;
 
-    @Autowired
-    private UserService userService;
+    private TaskCaseUseImpl userService;
 
 
     @GetMapping("/{id}")
@@ -32,16 +26,14 @@ public class TaskController {
     }
 
     @PostMapping()
-    @Validated
-    public ResponseEntity<Void> create(@Valid @RequestBody Task obj){
+    public ResponseEntity<Void> create(@RequestBody Task obj){
         this.taskService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    @Validated
-    public ResponseEntity<Void> update(@Valid @RequestBody Task obj, @PathVariable Long id){
+    public ResponseEntity<Void> update(@RequestBody Task obj, @PathVariable Long id){
         obj.setId(id);
         this.taskService.update(obj);
         return ResponseEntity.noContent().build();
@@ -56,7 +48,7 @@ public class TaskController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Task>> findAllByUserId(@PathVariable Long userId){
         this.userService.findById(userId);
-        List<Task> tasks = this.taskService.findAllByUserId(userId);
+        List<Task> tasks = this.taskService.findByUserId(userId);
         return ResponseEntity.ok().body(tasks);
     }
 }

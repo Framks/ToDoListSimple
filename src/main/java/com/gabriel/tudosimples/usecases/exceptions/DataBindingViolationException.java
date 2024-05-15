@@ -1,4 +1,4 @@
-package com.gabriel.tudosimples.services.exceptions;
+package com.gabriel.tudosimples.usecases.exceptions;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;

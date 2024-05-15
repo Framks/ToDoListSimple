@@ -1,4 +1,4 @@
-package com.gabriel.tudosimples.services.exceptions;
+package com.gabriel.tudosimples.usecases.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;

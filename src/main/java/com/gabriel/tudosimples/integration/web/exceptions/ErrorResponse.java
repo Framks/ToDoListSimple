@@ -1,4 +1,4 @@
-package com.gabriel.tudosimples.exceptions;
+package com.gabriel.tudosimples.integration.web.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -23,7 +23,6 @@ public class ErrorResponse {
 
     @RequiredArgsConstructor
     @Getter
-    @Setter
     private static class ValidationError{
         private final String field;
         private final String message;

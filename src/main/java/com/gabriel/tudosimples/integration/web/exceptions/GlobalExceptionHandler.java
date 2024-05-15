@@ -1,7 +1,8 @@
-package com.gabriel.tudosimples.exceptions;
+package com.gabriel.tudosimples.integration.web.exceptions;
 
-import com.gabriel.tudosimples.services.exceptions.DataBindingViolationException;
-import com.gabriel.tudosimples.services.exceptions.ObjectNotFoundException;
+import com.gabriel.tudosimples.usecases.exceptions.DataBindingViolationException;
+import com.gabriel.tudosimples.usecases.exceptions.ObjectNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,10 +18,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import javax.validation.Constraint;
-import javax.validation.ConstraintViolationException;
-import java.lang.reflect.Field;
 
 @Slf4j(topic = "GLOBAL_EXCEPTION_HANDLER")
 @RestControllerAdvice
