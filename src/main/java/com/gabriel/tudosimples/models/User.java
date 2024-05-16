@@ -16,7 +16,8 @@ import java.util.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Usuario implements UserDetails {
+@Table(name ="usuario")
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

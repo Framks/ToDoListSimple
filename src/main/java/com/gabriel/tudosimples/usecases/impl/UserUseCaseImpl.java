@@ -1,9 +1,9 @@
-package com.gabriel.tudosimples.usecases.impl.user;
+package com.gabriel.tudosimples.usecases.impl;
 
-import com.gabriel.tudosimples.models.Usuario;
+import com.gabriel.tudosimples.models.User;
 import com.gabriel.tudosimples.usecases.exceptions.DataBindingViolationException;
 import com.gabriel.tudosimples.usecases.exceptions.ObjectNotFoundException;
-import com.gabriel.tudosimples.usecases.repository.user.UserRepository;
+import com.gabriel.tudosimples.usecases.repository.UserRepository;
 import com.gabriel.tudosimples.usecases.user.IUserUsecase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,36 +23,36 @@ public class UserUseCaseImpl implements IUserUsecase {
 
     @Override
     @Transactional
-    public Usuario create(Usuario usuario) {
-        usuario.setId(null);
-        usuario.setPassword(this.passwordEncoder.encode(usuario.getPassword()));
-        usuario = this.userRepository.save(usuario);
-        return usuario;
+    public User create(User user) {
+        user.setId(null);
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+        user = this.userRepository.save(user);
+        return user;
     }
 
     @Override
-    public List<Usuario> listAll() {
+    public List<User> listAll() {
         return this.userRepository.findAll();
     }
 
     @Override
-    public Usuario findById(Long id) {
-        Optional<Usuario> user = this.userRepository.findById(id);
+    public User findById(Long id) {
+        Optional<User> user = this.userRepository.findById(id);
         return user.orElseThrow(() -> new ObjectNotFoundException(
-                "Usuário não encontrado! Id: "+id+", Tip: "+ Usuario.class.getName()
+                "Usuário não encontrado! Id: "+id+", Tip: "+ User.class.getName()
         ));
     }
 
     @Override
-    public Usuario findByusername(String username) {
-        return this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("Usuario not Found"));
+    public User findByusername(String username) {
+        return this.userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("User not Found"));
     }
 
     @Override
     @Transactional
-    public void update(Usuario usuario) {
-        Usuario newObj = findById(usuario.getId());
-        newObj.setPassword(usuario.getPassword());
+    public void update(User user) {
+        User newObj = findById(user.getId());
+        newObj.setPassword(user.getPassword());
         this.userRepository.save(newObj);
     }
 

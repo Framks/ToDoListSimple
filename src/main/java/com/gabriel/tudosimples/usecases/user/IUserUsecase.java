@@ -1,19 +1,19 @@
 package com.gabriel.tudosimples.usecases.user;
 
-import com.gabriel.tudosimples.models.Usuario;
+import com.gabriel.tudosimples.models.User;
 
 import java.util.List;
 
 public interface IUserUsecase {
-    Usuario create(Usuario usuario);
+    User create(User user);
 
-    List<Usuario> listAll();
+    List<User> listAll();
 
-    Usuario findById(Long id);
+    User findById(Long id);
 
-    Usuario findByusername(String username);
+    User findByusername(String username);
 
-    void update(Usuario usuario);
+    void update(User user);
 
     void delete(Long id);
 }

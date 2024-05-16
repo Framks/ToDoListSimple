@@ -1,4 +1,4 @@
-package com.gabriel.tudosimples.usecases.repository.task;
+package com.gabriel.tudosimples.usecases.repository;
 
 import com.gabriel.tudosimples.models.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    List<Task> findByUsuarioId(Long id);
+    List<Task> findByUserId(Long id);
 
     //@Query(value = "SELECT t FROM Task t WHERE t.user.id = :id")
     //List<Task>  findByUser_ID(@Param("id") Long id);

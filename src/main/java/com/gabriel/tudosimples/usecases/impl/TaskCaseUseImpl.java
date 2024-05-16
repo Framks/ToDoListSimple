@@ -1,18 +1,19 @@
-package com.gabriel.tudosimples.usecases.impl.task;
+package com.gabriel.tudosimples.usecases.impl;
 
 import com.gabriel.tudosimples.models.Task;
-import com.gabriel.tudosimples.models.Usuario;
+import com.gabriel.tudosimples.models.User;
 import com.gabriel.tudosimples.usecases.exceptions.DataBindingViolationException;
 import com.gabriel.tudosimples.usecases.exceptions.ObjectNotFoundException;
-import com.gabriel.tudosimples.usecases.impl.user.UserUseCaseImpl;
-import com.gabriel.tudosimples.usecases.repository.task.TaskRepository;
+import com.gabriel.tudosimples.usecases.repository.TaskRepository;
 import com.gabriel.tudosimples.usecases.task.ITaskUseCase;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class TaskCaseUseImpl implements ITaskUseCase {
 
@@ -20,18 +21,12 @@ public class TaskCaseUseImpl implements ITaskUseCase {
 
     private final UserUseCaseImpl userUseCaseImpl;
 
-    public TaskCaseUseImpl(UserUseCaseImpl userUseCase, TaskRepository taskRepository){
-        this.userUseCaseImpl = userUseCase;
-        this.taskRepository = taskRepository;
-    }
-
-
     @Override
     @Transactional
     public Task create(Task task) {
-        Usuario usuario = this.userUseCaseImpl.findByusername(task.getUsuario().getUsername());
+        User user = this.userUseCaseImpl.findByusername(task.getUser().getUsername());
         task.setId(null);
-        task.setUsuario(usuario);
+        task.setUser(user);
         task = this.taskRepository.save(task);
         return task;
     }
@@ -52,7 +47,7 @@ public class TaskCaseUseImpl implements ITaskUseCase {
 
     @Override
     public List<Task> findByUserId(Long id) {
-        return this.taskRepository.findByUsuarioId(id);
+        return this.taskRepository.findByUserId(id);
     }
 
     @Override

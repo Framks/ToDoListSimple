@@ -1,7 +1,7 @@
 package com.gabriel.tudosimples.integration.controllers;
 
 import com.gabriel.tudosimples.models.Task;
-import com.gabriel.tudosimples.usecases.impl.task.TaskCaseUseImpl;
+import com.gabriel.tudosimples.usecases.impl.TaskCaseUseImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

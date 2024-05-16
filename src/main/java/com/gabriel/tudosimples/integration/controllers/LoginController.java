@@ -2,8 +2,8 @@ package com.gabriel.tudosimples.integration.controllers;
 
 import com.gabriel.tudosimples.configs.security.JwtUtil;
 import com.gabriel.tudosimples.models.AuthRequest;
-import com.gabriel.tudosimples.models.Usuario;
-import com.gabriel.tudosimples.usecases.repository.user.UserRepository;
+import com.gabriel.tudosimples.models.User;
+import com.gabriel.tudosimples.usecases.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,7 +24,7 @@ public class LoginController {
     public String login(@RequestBody AuthRequest request){
         Authentication authentication = new UsernamePasswordAuthenticationToken(request.username(), request.password());
         this.authenticationManager.authenticate(authentication);
-        Usuario usuario = this.usuarioRepository.findByUsername(request.username()).orElseThrow();
-        return this.jwtService.createToken(usuario);
+        User user = this.usuarioRepository.findByUsername(request.username()).orElseThrow();
+        return this.jwtService.createToken(user);
     }
 }

@@ -21,8 +21,8 @@ public class Task {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false, updatable = false)
-    private Usuario usuario;
+    @JoinColumn(name = "usuario_id", nullable = false, updatable = false)
+    private User user;
 
     private String description;
     private LocalDateTime date;

@@ -1,11 +1,10 @@
 package com.gabriel.tudosimples.integration.controllers;
 
-import com.gabriel.tudosimples.models.Usuario;
-import com.gabriel.tudosimples.usecases.impl.user.UserUseCaseImpl;
+import com.gabriel.tudosimples.models.User;
+import com.gabriel.tudosimples.usecases.impl.UserUseCaseImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
@@ -19,27 +18,27 @@ public class UserController {
     private final UserUseCaseImpl userService;
 
     @GetMapping("/findAll")
-    @PreAuthorize("hasRole(T(com.gabriel.tudosimples.models.Usuario.Role).ADMIN.name())")
-    public ResponseEntity<List<Usuario>> findAll(){
-        List<Usuario> lis = this.userService.listAll();
+    @PreAuthorize("hasRole(T(com.gabriel.tudosimples.models.User.Role).ADMIN.name())")
+    public ResponseEntity<List<User>> findAll(){
+        List<User> lis = this.userService.listAll();
         return ResponseEntity.ok().body(lis);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> findById(@PathVariable Long id){
-        Usuario obj = this.userService.findById(id);
+    public ResponseEntity<User> findById(@PathVariable Long id){
+        User obj = this.userService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody Usuario obj){
+    public ResponseEntity<Void> create(@RequestBody User obj){
         this.userService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@RequestBody Usuario obj, @PathVariable Long id){
+    public ResponseEntity<Void> update(@RequestBody User obj, @PathVariable Long id){
         obj.setId(id);
         this.userService.update(obj);
         return ResponseEntity.noContent().build();
