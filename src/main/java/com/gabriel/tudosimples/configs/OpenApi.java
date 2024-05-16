@@ -1,4 +1,4 @@
-package com.gabriel.tudosimples.configs.security;
+package com.gabriel.tudosimples.configs;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -13,7 +13,7 @@ public class OpenApi {
 
     @Bean
     public OpenAPI customOpenAPI() {
-        final String securitySchemeName = "basicAuth";
+        final String securitySchemeName = "bearerAuth";
         final String apiTitle = "To-Do List API";
         return new OpenAPI()
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
@@ -23,7 +23,8 @@ public class OpenApi {
                                         new SecurityScheme()
                                                 .name(securitySchemeName)
                                                 .type(SecurityScheme.Type.HTTP)
-                                                .scheme("basic")
+                                                .scheme("bearer")
+                                                .bearerFormat("JWT")
                                 )
                 )
                 .info(new Info().title(apiTitle).version("0.0.1-SNAPSHOT"));
