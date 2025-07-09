@@ -33,6 +33,16 @@ public class TaskCaseUseImpl implements ITaskUseCase {
 
     @Override
     @Transactional
+    public Task create(Task task, String username) {
+        User user = this.userUseCaseImpl.findByusername(username);
+        task.setId(null);
+        task.setUser(user);
+        task = this.taskRepository.save(task);
+        return task;
+    }
+
+    @Override
+    @Transactional
     public void update(Task task) {
         Task newObj = findById(task.getId());
         newObj.setDescription(task.getDescription());

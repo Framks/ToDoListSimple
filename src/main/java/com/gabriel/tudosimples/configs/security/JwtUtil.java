@@ -21,7 +21,7 @@ public class JwtUtil {
     private static final String SECRET_KEY = "614E645267556B58703273357638782F413F4428472B4B6250655368566D5971";
 
     @Value("${jwt.secret}")
-    private String seccretKey;
+    private String secretKey;
 
     @Value("${jwt.expiration}")
     private Long expiration;
@@ -38,7 +38,7 @@ public class JwtUtil {
     }
 
     private SecretKey getSignKey() {
-        return Keys.hmacShaKeyFor(Base64.getEncoder().encode(this.seccretKey.getBytes()));
+        return Keys.hmacShaKeyFor(Base64.getEncoder().encode(this.secretKey.getBytes()));
     }
 
     private static Date convertFromLocalDateTime(LocalDateTime now) {

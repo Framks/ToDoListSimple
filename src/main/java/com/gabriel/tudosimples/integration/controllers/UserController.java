@@ -1,6 +1,7 @@
 package com.gabriel.tudosimples.integration.controllers;
 
 import com.gabriel.tudosimples.models.User;
+import com.gabriel.tudosimples.models.dto.UserPost;
 import com.gabriel.tudosimples.usecases.impl.UserUseCaseImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +32,17 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody User obj){
-        this.userService.create(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+    public ResponseEntity<Void> create(@RequestBody UserPost dto){
+        User user = new User();
+        user.setUsername(dto.username());
+        user.setPassword(dto.password());
+        user.setRole(dto.role());
+        user.setActive(true);
+        user.setAccountExpired(false);
+        user.setAccountLocked(false);
+        user.setCredentialsExpired(false);
+        this.userService.create(user);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
