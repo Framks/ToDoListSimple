@@ -1,0 +1,36 @@
+zabbix_export:
+  version: '6.0'
+  date: '2025-07-13T00:57:25Z'
+  groups:
+    - uuid: 04d9ba0db54d4a33a71a4e8c7850b6fc
+      name: 'Java app'
+    - uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    - uuid: 71f219e905924d2aba19bca9c2aa2f84
+      template: application_java_for_jmx
+      name: application_java_for_jmx
+      groups:
+        - name: 'Java app'
+        - name: Templates
+      items:
+        - uuid: c50e0f4729e74771a379d60e1db0f66f
+          name: 'Last GC Duration'
+          type: JMX
+          key: 'jmx["java.lang:type=GarbageCollector,name=G1 Young Generation",LastGcInfo.duration]'
+          jmx_endpoint: 'service:jmx:rmi:///jndi/rmi://{HOST.CONN}:{HOST.PORT}/jmxrmi'
+        - uuid: 623081b1752c4eea83189f1d1c422adc
+          name: 'Heap Memory Max'
+          type: JMX
+          key: 'jmx["java.lang:type=Memory",HeapMemoryUsage.max]'
+          jmx_endpoint: 'service:jmx:rmi:///jndi/rmi://{HOST.CONN}:{HOST.PORT}/jmxrmi'
+        - uuid: a866600e3f7f4998a96315369b4e6a8b
+          name: 'Heap Memory Used'
+          type: JMX
+          key: 'jmx["java.lang:type=Memory",HeapMemoryUsage.used]'
+          jmx_endpoint: 'service:jmx:rmi:///jndi/rmi://{HOST.CONN}:{HOST.PORT}/jmxrmi'
+        - uuid: 7889873a93f741438302b5b3bfb0a006
+          name: 'Thread Count'
+          type: JMX
+          key: 'jmx["java.lang:type=Threading",ThreadCount]'
+          jmx_endpoint: 'service:jmx:rmi:///jndi/rmi://{HOST.CONN}:{HOST.PORT}/jmxrmi'

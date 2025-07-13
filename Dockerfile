@@ -12,8 +12,8 @@ RUN apt-get update && \
     apt-get install -y zabbix-agent && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-COPY zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf
-COPY entrypoint.sh /entrypoint.sh
+COPY monitoring/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf
+COPY monitoring/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 EXPOSE 9010 10050 8080

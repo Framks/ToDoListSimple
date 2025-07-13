@@ -2,18 +2,22 @@ version: '3.5'
 
 services:
   zabbix-server:
+    container_name: zabbix-server
     image: zabbix/zabbix-server-pgsql:6.0-alpine-latest
     environment:
       - DB_SERVER_HOST=postgres
       - POSTGRES_USER=zabbix
       - POSTGRES_PASSWORD=zabbix
       - POSTGRES_DB=zabbix
-      - ZBX_STARTJAVAGATEWAY=1
-      - ZBX_JAVAGATEWAY=zabbix-java-gateway
+    volumes:
+      - ./monitoring/zabbix_server.conf:/etc/zabbix/zabbix_server.conf
     ports:
       - "10051:10051"
     depends_on:
       - postgres
+    networks:
+      default:
+        ipv4_address: 172.18.0.4
 
   zabbix-java-gateway:
     container_name: zabbix-java-gateway
@@ -24,6 +28,9 @@ services:
       - ZBX_TIMEOUT=30
     ports:
       - "10052:10052"
+    networks:
+      default:
+        ipv4_address: 172.18.0.2
 
   zabbix-web:
     image: zabbix/zabbix-web-nginx-pgsql:6.0-alpine-latest
@@ -39,6 +46,9 @@ services:
     depends_on:
       - postgres
       - zabbix-server
+    networks:
+      default:
+        ipv4_address: 172.18.0.5
 
   postgres:
     image: postgres:15
@@ -48,6 +58,9 @@ services:
       - POSTGRES_PASSWORD=zabbix
     volumes:
       - pg_data:/var/lib/postgresql/data
+    networks:
+      default:
+        ipv4_address: 172.18.0.6
 
   app:
     build: .
@@ -55,12 +68,13 @@ services:
     ports:
       - "8081:8080"
       - "9010:9010"
-      #- "10053:10051"
-    environment:
-      - SPRING_PROFILES_ACTIVE=prod
+      - "10050:10050"
     volumes:
-      - ./zabbix_agentd.conf:/etc/zabbix/zabbix_agentd.conf
-      - ./entrypoint.sh:/entrypoint.sh
+      - ./monitoring/zabbix_agentd.conf:/etc/zabbix/zabbix_agentd.conf
+      - ./monitoring/entrypoint.sh:/entrypoint.sh
+    networks:
+      default:
+        ipv4_address: 172.18.0.3
 
 volumes:
   mysql_data:
@@ -69,3 +83,7 @@ volumes:
 networks:
   default:
     name: zabbix_net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16

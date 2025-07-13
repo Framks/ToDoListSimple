@@ -1,0 +1,49 @@
+zabbix_export:
+  version: '6.0'
+  date: '2025-07-13T00:57:18Z'
+  groups:
+    - uuid: 04d9ba0db54d4a33a71a4e8c7850b6fc
+      name: 'Java app'
+  hosts:
+    - host: 'Java app jmx'
+      name: 'Java app jmx'
+      templates:
+        - name: application_java_for_jmx
+      groups:
+        - name: 'Java app'
+      interfaces:
+        - type: JMX
+          ip: 172.18.0.3
+          dns: minha-aplicacao-java
+          port: '9010'
+          interface_ref: if1
+      inventory_mode: DISABLED
+  graphs:
+    - name: 'Heap Memory Max'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Java app jmx'
+            key: 'jmx["java.lang:type=Memory",HeapMemoryUsage.max]'
+    - name: 'Heap Memory Used'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Java app jmx'
+            key: 'jmx["java.lang:type=Memory",HeapMemoryUsage.used]'
+    - name: 'Last GC Duration'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Java app jmx'
+            key: 'jmx["java.lang:type=GarbageCollector,name=G1 Young Generation",LastGcInfo.duration]'
+    - name: 'Thread Count'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Java app jmx'
+            key: 'jmx["java.lang:type=Threading",ThreadCount]'
